@@ -32,6 +32,11 @@ int main(int argc, char* argv[])
 	}
 	if (response_text.length() == 3)
 	{
+		if (!isdigit(response_text[0]) || !isdigit(response_text[1]) || !isdigit(response_text[2]))
+		{
+			std::cout << "Please make sure that you have entered a valid URL or a valid status code.\n";
+			return 0;
+		}
 		// 100s
 		if (response_text == "100") { std::cout << "Continue\n\nDescription: The initial part of a request has been received and has not yet been rejected by the server. The server intends to send a final response after the request has been fully received and acted upon."; }
 		else if (response_text == "101") { std::cout << "Switching Protocols\n\nDescription: The server understands and is willing to comply with the client's request, via the Upgrade header field, for a change in the application protocol being used on this connection."; }
@@ -123,6 +128,7 @@ int main(int argc, char* argv[])
 		// CLOUDFLARE END
 		else if (response_text == "598") { std::cout << "Network Read Timeout Error\n\nDescription: This status code is not specified in any RFCs, but is used by Microsoft HTTP proxies to signal a network read timeout behind the proxy to a client in front of the proxy."; }
 		else if (response_text == "599") { std::cout << "Network Connect Timeout Error\n\nDescription: This status code is not specified in any RFCs, but is used by Microsoft HTTP proxies to signal a network connect timeout behind the proxy to a client in front of the proxy."; }
+		else { std::cout << "Unknown status code!"; }
 		std::cout << "\n";
 	}
 	if (response_text.length() > 3) // unicode is not supported yet
@@ -324,6 +330,7 @@ int response_code(const std::string& url, const bool display_text)
 		// CLOUDFLARE END
 		else if (static_cast<std::string>(response_text) == "598") { std::cout << "Network Read Timeout Error\n\nDescription: This status code is not specified in any RFCs, but is used by Microsoft HTTP proxies to signal a network read timeout behind the proxy to a client in front of the proxy."; }
 		else if (static_cast<std::string>(response_text) == "599") { std::cout << "Network Connect Timeout Error\n\nDescription: This status code is not specified in any RFCs, but is used by Microsoft HTTP proxies to signal a network connect timeout behind the proxy to a client in front of the proxy."; }
+		else { std::cout << "Unknown status code!"; }
 		std::cout << "\n";
 	}
 	InternetCloseHandle(h_open);
