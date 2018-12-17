@@ -2,14 +2,16 @@
 
 I keep forgetting what's what if it's not a common error, such as 404. So, I made this. You can run it on Linux and Windows.
 
-Here's an example of it while working:
-![GIF of CLI](https://i.imgur.com/p4Phiss.gif)
+Here's an example of it while working: **(NEW, now with descriptions and with ability to display header)**
+![GIF of CLI](https://i.imgur.com/UW4RGXf.gif)
 
 Check [releases](https://github.com/tkduman/cli-http-status-code/releases) for the executables if you don't want to compile it yourself.
 
 Some notable things:
 * Linux version uses libcurl, because I didn't find anything that could work in place of wininet.
 * Windows version works on native wininet, thus way faster. Also the "Remote server is offline or unreachable, connection timed out." message is instant. Libcurl keeps on trying, so I set up a 5 second timeout limit on Linux. If no response is received after 5 seconds it will timeout and tell you.
+* Windows version now uses curl for calling the header, but if you don't want to see the header everything will work through wininet.
+* Linux version uses curl for everything.
 * I remembered that a friend of mine requested this so he could use it while working, so here it is.
 
 ## Features and basics
@@ -17,23 +19,45 @@ Some notable things:
 * You can check status of a site by typing the domain.
 Here's a few examples:
 ```console
-duman@ubuntu:~$ status a.co
+duman@ubuntu:~/Desktop/http-cli$ status a.co
 a.co	Response: 200 OK
-duman@ubuntu:~$ status google.com
+
+Description: The request has succeeded.
+duman@ubuntu:~/Desktop/http-cli$ status google.com
 google.com	Response: 200 OK
-duman@ubuntu:~$ status bmw.com
-bmw.com	Response: 200 OK
-duman@ubuntu:~$ status github.com
-github.com	Response: 200 OK
-duman@ubuntu:~$ status httpstat.us/500
-httpstat.us/500	Response: 500 Internal Server Error
-duman@ubuntu:~$ status google.com/32483
-google.com/32483	Response: 404 Not Found
+
+Description: The request has succeeded.
+duman@ubuntu:~/Desktop/http-cli$ status 420
+Method Failure / Enhance Your Calm (Twitter)
+
+Description 1: Not part of the HTTP standard, but defined by Spring in the HttpStatus class to be used when a method failed. This status code is deprecated by Spring.
+
+Description 2: Not part of the HTTP standard, but returned by version 1 of the Twitter Search and Trends API when the client is being rate limited. Other services may wish to implement the 429 Too Many Requests response code instead.
+duman@ubuntu:~/Desktop/http-cli$ status reddit.com -h
+reddit.com	Response: 200 OK
+
+Description: The request has succeeded.
+
+Header:
+HTTP/1.1 301 Moved Permanently
+Retry-After: 0
+Location: https://www.reddit.com/
+Content-Length: 0
+Accept-Ranges: bytes
+Date: Mon, 17 Dec 2018 16:02:23 GMT
+Via: 1.1 varnish
+Connection: close
+X-Served-By: cache-fra19122-FRA
+X-Cache: HIT
+X-Cache-Hits: 0
+X-Timer: S1545062543.362026,VS0,VE0
+Cache-Control: private, max-age=3600
+Server: snooserv
 ```
 
 This will connect to the server and grab the status code, will display the URL that you've tried and the response of the server as the output.
 
-* You can see the header response from the server if you wish to by adding "-h" or "h" as the second argument. **(NEW, Windows version only)**
+* You can see the header response from the server if you wish to by adding "-h" or "h" as the second argument. **(NEW, both Windows and Linux!)**
 
 Here's an few example:
 ```console
