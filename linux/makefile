@@ -13,6 +13,4 @@ $(appname): $(objects)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(appname) $(objects) $(LDLIBS)
 
 clean:
-	rm -f ./status
-
-include .depend
+	rm -f ./status ./http-status-linux.o
