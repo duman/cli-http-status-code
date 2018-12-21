@@ -1,7 +1,7 @@
 appname := status
 
 CXX := g++
-CXXFLAGS := -std=c++0x
+CXXFLAGS := -std=c++11
 
 srcfiles := $(shell find . -name "*.cpp")
 objects  := $(patsubst %.cpp, %.o, $(srcfiles))
