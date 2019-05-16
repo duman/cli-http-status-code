@@ -124,7 +124,7 @@ Description 2: Not part of the HTTP standard, but returned by version 1 of the T
 * **(NEW, URL is now checked with regex)**
 Invalid URL will now warn you, however if your URL contains unicode character such as "ü", program will crash. On the next version I'll probably fix this.
 
-## Building on Linux
+## Building on Ubuntu
 
 Before starting the building process make sure that you have correct libraries. I've done all the testing on Ubuntu 16.04.
 Here's how you build it on Ubuntu 16.04. (May or may not work on other versions, find appropriate libraries. Also feel free to update the README if you wish to, I'll mostly likely forget about this repository tomorrow.)
@@ -136,7 +136,23 @@ g++ -std=c++0x http-status-linux.cpp -o status -lcurl
 
 There you go, it's done. You can follow instructions on the [release](https://github.com/tkduman/cli-http-status-code/releases) page and add it to your path, so that you can call it directly by typing `status 503`. Isn't that cool? *(You may want to name it as something else because status itself is a thing already, you'll overwrite it if you leave the name as status on linux.)*
 
-*Linux version currently doesn't support displaying the header feature, will be added with next release.*
+~~*Linux version currently doesn't support displaying the header feature, will be added with next release.*~~
+
+## Building on CentOS 7
+
+Building on CentOS is slightly trickier but nothing hard.
+
+```console
+yum install curl-devel # this is equivalent of libcurl4-openssl-dev from Ubuntu
+yum install gcc-c++ # installs g++, however gcc version is too low to compile the code
+
+yum install centos-release-scl
+yum install devtoolset-6
+scl enable devtoolset-6 bash # this will make your gcc go to 6.3.1 version, and everything will good to go
+g++ -std=c++0x http-status-linux.cpp -o status -lcurl
+```
+
+There you go, it's done. You can follow instructions on the [release](https://github.com/tkduman/cli-http-status-code/releases) page and add it to your path, so that you can call it directly by typing `status 503`. Isn't that cool? *(You may want to name it as something else because status may be a thing itself already, you'll overwrite it if you leave the name as status on linux.)*
 
 ## Building on Windows
 
